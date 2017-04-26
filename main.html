@@ -20,6 +20,7 @@
 	<a-asset-item id="object" src="https://greeny3ny.github.io/models/objects/theater.obj"></a-asset-item>
 	<a-asset-item id="material" src="https://greeny3ny.github.io/models/materials/theater.mtl"></a-asset-item>
 	<a-asset-item id="theater" src="https://greeny3ny.github.io/models/dae/theater.dae"></a-asset-item>
+	<a-asset-item id="curTex" src="https://greeny3ny.github.io/theater/assets/curtain.png"></a-asset-item>
 
   	</a-assets>
 
@@ -29,13 +30,16 @@
 
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
-	<a-entity id="test" geometry="primitive:box" color="#2295DD" position="-8 2 9.5" scale="0.1 1 19" sync="ownOn:moveCurtain" sync-transform>
-		<a-animation begin="moveCurtain" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30"  ></a-animation>
+	<a-entity id="curt1" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8 10 9.5" scale="0.1 18 19" sync="ownOn:moveCurtain" sync-transform>
+		<a-animation begin="moveCurtain1" easing="ease-in" attribute="position" from="-8 10 9.5" to="-8 10 30"  ></a-animation>
+		<a-animation begin="moveCurtainB1" easing="ease-in" attribute="position" from="-8 10 30" to="-8 10 9.5"  ></a-animation>
 	</a-entity>
 	
-	<!--<a-box position="0 0 0" scale="1 1 1"></a-box>
-	-->
-	<a-box position="-8.05 2 -9.5" scale="0.1 1 19"></a-box>
+	<a-entity id="curt2" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8 10 -9.5" scale="0.1 18 19" sync="ownOn:moveCurtain2" sync-transfrom>
+		<a-animation begin="moveCurtain2" easing="ease-in" attribute="position" from="-8 10 -9.5" to="-8 10 -30"  ></a-animation>
+		<a-animation begin="moveCurtainB2" easing="ease-in" attribute="position" from="-8 10 -30" to="-8 10 -9.5"  ></a-animation>
+	</a-entity>
+	
 	
 </a-scene>
  
@@ -48,12 +52,20 @@
 	var boxGeo = new THREE.BoxGeometry(1, 1, 1);
 	var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 	var box1 = new THREE.Mesh(boxGeo, material);
+	var curtOpen = false; //are the curtains open?
 	box1.position.set(0, 0, 0);
 	
 	box1.addEventListener('cursordown', function(){
 		
-		document.querySelector('#test').emit('moveCurtain');
-	
+		if (!curtOpen){
+			document.querySelector('#curt1').emit('moveCurtain1');
+			document.querySelector('#curt2').emit('moveCurtain2');
+			curtOpen = true;
+		} else {
+			document.querySelector('#curt1').emit('moveCurtainB1');
+			document.querySelector('#curt2').emit('moveCurtainB2');
+			curtOpen = false;
+		}
 	});
 	
 	sim.scene.add(box1);
