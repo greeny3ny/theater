@@ -12,29 +12,25 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/3.0.0/nunjucks.min.js"></script>
 <script src="https://rawgit.com/ngokevin/kframe/a1df8fc01514e509ba6d39c964254a1f1043b12b/dist/kframe.min.js"></script>
 
-
-
 <!-- set up the scene -->
 <a-scene altspace sync-system='app: theater; author: greeny3ny'>
-
-    <a-assets>
-    <img id="win" src="assets/win.png">
-    <img id="lose" src="assets/lose.png">
 	
+    <a-assets>
+
 	<a-asset-item id="object" src="https://greeny3ny.github.io/models/objects/theater.obj"></a-asset-item>
 	<a-asset-item id="material" src="https://greeny3ny.github.io/models/materials/theater.mtl"></a-asset-item>
 	<a-asset-item id="theater" src="https://greeny3ny.github.io/models/dae/theater.dae"></a-asset-item>
-	<img id='stars' src='assets/stars.png'/>
+
   	</a-assets>
 
 	<!--<a-entity n-mesh-collider="type:environment" position="37 0 -28" rotation="0 0 0" scale="1 1 1" obj-model="obj: #object; mtl: #material"></a-entity>
-
+<!--
 	<a-box n-mesh-collider="type:environment" depth="2" height="2" width="2" position='2 0 2'>-->
 
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
-	<a-entity geometry="primitive:box" color="#2295DD" position="-8 2 9.5" scale="0.1 1 19" sync="own-on:click" sync-transform>
-		<a-animation begin="click" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30"  ></a-animation>
+	<a-entity id="test" geometry="primitive:box" color="#2295DD" position="-8 2 9.5" scale="0.1 1 19" sync="ownOn:moveCurtain" sync-transform>
+		<a-animation begin="moveCurtain" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30"  ></a-animation>
 	</a-entity>
 	
 	<!--<a-box position="0 0 0" scale="1 1 1"></a-box>
@@ -50,13 +46,13 @@
 	var scene = document.querySelector('a-scene');
 	var sim = new altspace.utilities.Simulation();
 	var boxGeo = new THREE.BoxGeometry(1, 1, 1);
-	var material = new THREE.MeshBasicMaterial( { color: 0x00ffff } );
+	var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 	var box1 = new THREE.Mesh(boxGeo, material);
 	box1.position.set(0, 0, 0);
 	
 	box1.addEventListener('cursordown', function(){
 		
-		//document.querySelector('#test').emit('click');
+		document.querySelector('#test').emit('moveCurtain');
 	
 	});
 	
