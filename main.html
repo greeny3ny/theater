@@ -14,59 +14,9 @@
 
 
 
-    <script src="https://cdn.rawgit.com/AltspaceVR/AltspaceSDK/v2.4.0/dist/altspace.min.js"></script>
-    <script>
-      altspace.getThreeJSTrackingSkeleton().then(function(skeleton) {
-        window.head = skeleton.getJoint('Head');
-      });
- 
-      AFRAME.registerComponent('altspace-look-at', {
-        init: function () {
-          if(!window.altspace || !altspace.inClient) return;
-        },
-        tick: function () {
-          if(!window.head || !this.el.object3D) return;
-          this.el.object3D.lookAt(window.head.position); 
-        }
-      });
-    </script>
-    <script>
-      // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
-      // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
-      AFRAME.registerComponent('collapse-model', {
-        init: function () {
-          this.el.addEventListener('model-loaded', function () {
-            this.el.object3DMap.mesh.updateMatrixWorld();
- 
-            var mesh;
-            this.el.object3DMap.mesh.traverse(function (obj) {
-              if(!mesh && obj instanceof THREE.Mesh) mesh = obj;
- 
- 
-            }.bind(this));
- 
-            if(mesh) {
-              mesh.scale.copy(mesh.getWorldScale());
-              this.el.setObject3D('mesh', mesh);
-              // setObject3D emits this event in a-frame 0.4.0
-              this.el.emit('object3dset', {
-                type: 'mesh'
-              });
-            }
-          }.bind(this));
-        }
-      });
-    </script>
-
-	
 <!-- set up the scene -->
 <a-scene altspace sync-system='app: theater; author: greeny3ny'>
- 
-    <!-- add a view camera (2d only) -->
-    <!--<a-text value="Hello, World!"></a-text>-->
 
-	
-	
     <a-assets>
     <img id="win" src="assets/win.png">
     <img id="lose" src="assets/lose.png">
@@ -78,7 +28,7 @@
   	</a-assets>
 
 	<!--<a-entity n-mesh-collider="type:environment" position="37 0 -28" rotation="0 0 0" scale="1 1 1" obj-model="obj: #object; mtl: #material"></a-entity>
-<!--
+
 	<a-box n-mesh-collider="type:environment" depth="2" height="2" width="2" position='2 0 2'>-->
 
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
