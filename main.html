@@ -30,14 +30,12 @@
 
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
-	<a-entity id="curt1" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8 10 9.5" scale="0.1 18 19" sync="ownOn:moveCurtain1" sync-transform>
-		<a-animation begin="moveCurtain1" easing="ease-in" attribute="position" from="-8 10 9.5" to="-8 10 30"></a-animation>
-		<a-animation begin="moveCurtainB1" easing="ease-in" attribute="position" from="-8 10 30" to="-8 10 9.5"></a-animation>
+	<a-entity id="curt1" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8.5 10 9.5" scale="0.1 18 19" sync="ownOn:moveCurtain1" sync-transform>
+		<a-animation begin="moveCurtain1" dur="5000" direction="alternate" easing="linear" attribute="position" from="-8.5 10 9.5" to="-8.5 10 30"  ></a-animation>
 	</a-entity>
 	
-	<a-entity id="curt2" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8 10 -9.5" scale="0.1 18 19" sync="ownOn:moveCurtain2" sync-transform>
-		<a-animation begin="moveCurtain2" easing="ease-in" attribute="position" from="-8 10 -9.5" to="-8 10 -30"  ></a-animation>
-		<a-animation begin="moveCurtainB2" easing="ease-in" attribute="position" from="-8 10 -30" to="-8 10 -9.5"></a-animation>
+	<a-entity id="curt2" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8.5 10 -9.5" scale="0.1 18 19" sync="ownOn:moveCurtain2" sync-transform>
+		<a-animation begin="moveCurtain2" dur="5000" direction="alternate" easing="linear" attribute="position" from="-8.5 10 -9.5" to="-8.5 10 -30"  ></a-animation>
 	</a-entity>
 	
 	
@@ -50,26 +48,22 @@
 	var scene = document.querySelector('a-scene');
 	var sim = new altspace.utilities.Simulation();
 	var boxGeo = new THREE.BoxGeometry(1, 1, 1);
-	var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-	var box1 = new THREE.Mesh(boxGeo, material);
-	var curtOpen = false; //are the curtains open?
-	box1.position.set(0, 0, 0);
+	var openMat = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+	var closeMat = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+	var openBox = new THREE.Mesh(boxGeo, openMat);
+
+	openBox.position.set(0, 0, 0);
+
 	
-	box1.addEventListener('cursordown', function(){
-		
-		if (!curtOpen){
-			document.querySelector('#curt1').emit('moveCurtain1');
-			document.querySelector('#curt2').emit('moveCurtain2');
-			curtOpen = true;
-		} else {
-			document.querySelector('#curt1').emit('moveCurtainB1');
-			document.querySelector('#curt2').emit('moveCurtainB2');
-			curtOpen = false;
-		}
+	openBox.addEventListener('cursordown', function(){
+		document.querySelector('#curt1').emit('moveCurtain1');
+		document.querySelector('#curt2').emit('moveCurtain2');		
 	});
 	
-	sim.scene.add(box1);
+	
+	sim.scene.add(openBox);
 
+	
 </script>
 
 </html>
