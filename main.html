@@ -4,6 +4,7 @@
 	
 <body>
 	
+<!-- Idk why i have imported half this stuff -->
 <script src="https://aframe.io/releases/0.3.0/aframe.min.js"></script>
 <script src="https://cdn.rawgit.com/AltspaceVR/AltspaceSDK/v2.0.2/dist/altspace.min.js"></script>
 <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
@@ -36,6 +37,7 @@
 
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
+	<!-- box im trying to sync here -->
 	<a-box color="#2295DD" position="-8 2 9.5" scale="0.1 1 19" sync="ownOn:click" sync-transform>
 		<a-animation begin="click" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30"></a-animation>
 	</a-box>
