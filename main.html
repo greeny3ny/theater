@@ -4,7 +4,6 @@
 	
 <body>
 	
-<!-- Idk why i have imported half this stuff -->
 <script src="https://aframe.io/releases/0.3.0/aframe.min.js"></script>
 <script src="https://cdn.rawgit.com/AltspaceVR/AltspaceSDK/v2.0.2/dist/altspace.min.js"></script>
 <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
@@ -12,35 +11,107 @@
 <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/3.0.0/nunjucks.min.js"></script>
 <script src="https://rawgit.com/ngokevin/kframe/a1df8fc01514e509ba6d39c964254a1f1043b12b/dist/kframe.min.js"></script>
+
+
+
+    <script src="https://cdn.rawgit.com/AltspaceVR/AltspaceSDK/v2.4.0/dist/altspace.min.js"></script>
+    <script>
+      altspace.getThreeJSTrackingSkeleton().then(function(skeleton) {
+        window.head = skeleton.getJoint('Head');
+      });
+ 
+      AFRAME.registerComponent('altspace-look-at', {
+        init: function () {
+          if(!window.altspace || !altspace.inClient) return;
+        },
+        tick: function () {
+          if(!window.head || !this.el.object3D) return;
+          this.el.object3D.lookAt(window.head.position); 
+        }
+      });
+    </script>
+    <script>
+      // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
+      // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
+      AFRAME.registerComponent('collapse-model', {
+        init: function () {
+          this.el.addEventListener('model-loaded', function () {
+            this.el.object3DMap.mesh.updateMatrixWorld();
+ 
+            var mesh;
+            this.el.object3DMap.mesh.traverse(function (obj) {
+              if(!mesh && obj instanceof THREE.Mesh) mesh = obj;
+ 
+ 
+            }.bind(this));
+ 
+            if(mesh) {
+              mesh.scale.copy(mesh.getWorldScale());
+              this.el.setObject3D('mesh', mesh);
+              // setObject3D emits this event in a-frame 0.4.0
+              this.el.emit('object3dset', {
+                type: 'mesh'
+              });
+            }
+          }.bind(this));
+        }
+      });
+    </script>
+
 	
 <!-- set up the scene -->
 <a-scene altspace sync-system='app: theater; author: greeny3ny'>
-	
-   <a-assets>
+ 
+    <!-- add a view camera (2d only) -->
+    <!--<a-text value="Hello, World!"></a-text>-->
 
+	
+	
+    <a-assets>
+    <img id="win" src="assets/win.png">
+    <img id="lose" src="assets/lose.png">
+	
 	<a-asset-item id="object" src="https://greeny3ny.github.io/models/objects/theater.obj"></a-asset-item>
 	<a-asset-item id="material" src="https://greeny3ny.github.io/models/materials/theater.mtl"></a-asset-item>
 	<a-asset-item id="theater" src="https://greeny3ny.github.io/models/dae/theater.dae"></a-asset-item>
-
-  </a-assets>
+	<img id='stars' src='assets/stars.png'/>
+  	</a-assets>
 
 	<!--<a-entity n-mesh-collider="type:environment" position="37 0 -28" rotation="0 0 0" scale="1 1 1" obj-model="obj: #object; mtl: #material"></a-entity>
-
+<!--
 	<a-box n-mesh-collider="type:environment" depth="2" height="2" width="2" position='2 0 2'>-->
 
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
-	<!-- box im trying to sync here -->
-	<a-box color="#00ff00" position="-8 2 9.5" scale="0.1 1 19" sync="own-on:mousedown" sync-transform>
-		<a-animation begin="mousedown" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30"></a-animation>
-	</a-box>
+	<a-entity geometry="primitive:box" color="#2295DD" position="-8 2 9.5" scale="0.1 1 19" sync="ownOn:click" sync-transform>
+		<a-animation begin="click" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30"  ></a-animation>
+	</a-entity>
 	
-	<a-box position="0 0 0" scale="1 1 1"></a-box>
-	
+	<!--<a-box position="0 0 0" scale="1 1 1"></a-box>
+	-->
 	<a-box position="-8.05 2 -9.5" scale="0.1 1 19"></a-box>
 	
 </a-scene>
  
+ 
 </body>
+
+<script>
+	var scene = document.querySelector('a-scene');
+	var sim = new altspace.utilities.Simulation();
+	var boxGeo = new THREE.BoxGeometry(1, 1, 1);
+	var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+	var box1 = new THREE.Mesh(boxGeo, material);
+	box1.position.set(0, 0, 0);
+	
+	box1.addEventListener('cursordown', function(){
+		
+		//document.querySelector(')
+	
+	});
+	
+	sim.scene.add(box1);
+
+</script>
 
 </html>
