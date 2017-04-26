@@ -31,8 +31,8 @@
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
 	<!-- box im trying to sync here -->
-	<a-box color="#00ff00" position="-8 2 9.5" scale="0.1 1 19" sync="own-on:cursordown" sync-transform>
-		<a-animation begin="cursordown" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30"></a-animation>
+	<a-box color="#00ff00" position="-8 2 9.5" scale="0.1 1 19" sync="own-on:mousedown" sync-transform>
+		<a-animation begin="mousedown" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30"></a-animation>
 	</a-box>
 	
 	<a-box position="0 0 0" scale="1 1 1"></a-box>
