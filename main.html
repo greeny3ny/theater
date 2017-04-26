@@ -31,13 +31,13 @@
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
 	<a-entity id="curt1" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8 10 9.5" scale="0.1 18 19" >
-		<a-animation begin="moveCurtain1" easing="ease-in" attribute="position" from="-8 10 9.5" to="-8 10 30"  sync="ownOn:moveCurtain" sync-transform></a-animation>
-		<a-animation begin="moveCurtainB1" easing="ease-in" attribute="position" from="-8 10 30" to="-8 10 9.5"  ></a-animation>
+		<a-animation begin="moveCurtain1" easing="ease-in" attribute="position" from="-8 10 9.5" to="-8 10 30"  sync="ownOn:moveCurtain1" sync-transform></a-animation>
+		<a-animation begin="moveCurtainB1" easing="ease-in" attribute="position" from="-8 10 30" to="-8 10 9.5"  sync="ownOn:moveCurtainB1" sync-transform></a-animation>
 	</a-entity>
 	
 	<a-entity id="curt2" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8 10 -9.5" scale="0.1 18 19" >
-		<a-animation begin="moveCurtain2" easing="ease-in" attribute="position" from="-8 10 -9.5" to="-8 10 -30"  sync="ownOn:moveCurtain2" sync-transfrom></a-animation>
-		<a-animation begin="moveCurtainB2" easing="ease-in" attribute="position" from="-8 10 -30" to="-8 10 -9.5"  ></a-animation>
+		<a-animation begin="moveCurtain2" easing="ease-in" attribute="position" from="-8 10 -9.5" to="-8 10 -30"  sync="ownOn:moveCurtain2" sync-transform></a-animation>
+		<a-animation begin="moveCurtainB2" easing="ease-in" attribute="position" from="-8 10 -30" to="-8 10 -9.5" sync="ownOn:moveCurtainB2" sync-transform ></a-animation>
 	</a-entity>
 	
 	
