@@ -60,7 +60,7 @@
 
 	
 <!-- set up the scene -->
-<a-scene altspace>
+<a-scene altspace sync-system='app: theater; author: greeny3ny'>
  
     <!-- add a view camera (2d only) -->
     <!--<a-text value="Hello, World!"></a-text>-->
@@ -83,7 +83,7 @@
 
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
-	<a-box color="#0095DD" position="-8 2 9.5" scale="0.1 1 19">
+	<a-box color="#2295DD" position="-8 2 9.5" scale="0.1 1 19" sync sync-transform>
 		<a-animation begin="click" easing="ease-in" attribute="position" from="-8 2 9.5" to="-8 2 30></a-animation>
 	</a-box>
 	
