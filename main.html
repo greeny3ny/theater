@@ -28,8 +28,11 @@
 <!--
 	<a-box n-mesh-collider="type:environment" depth="2" height="2" width="2" position='2 0 2'>-->
 
+	<!-- Theater model -->
 	<a-entity n-mesh-collider="type:environment" position="0 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
+	<!-- Horizontal Curtain -->
+	<!--
 	<a-entity id="curt1" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8.5 10 9.5" scale="0.1 18 19" sync="ownOn:moveCurtain1" sync-transform>
 		<a-animation begin="moveCurtain1" dur="5000" direction="alternate" easing="linear" attribute="position" from="-8.5 10 9.5" to="-8.5 10 30"  ></a-animation>
 	</a-entity>
@@ -37,7 +40,12 @@
 	<a-entity id="curt2" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8.5 10 -9.5" scale="0.1 18 19" sync="ownOn:moveCurtain2" sync-transform>
 		<a-animation begin="moveCurtain2" dur="5000" direction="alternate" easing="linear" attribute="position" from="-8.5 10 -9.5" to="-8.5 10 -30"  ></a-animation>
 	</a-entity>
+	-->
 	
+	<!-- Vertical Curtain -->
+	<a-entity id="curtVert" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8.5 10 0" scale="0.1 20 38" sync="ownOn:moveCurtainVert" sync-transform>
+		<a-animation begin="moveCurtainVert" dur="5000" direction="alternate" easing="linear" attribute="position" from="-8.5 10 0" to="-8.5 28 0"  ></a-animation>
+	</a-entity>
 	
 </a-scene>
  
@@ -56,8 +64,9 @@
 
 	
 	openBox.addEventListener('cursordown', function(){
-		document.querySelector('#curt1').emit('moveCurtain1');
-		document.querySelector('#curt2').emit('moveCurtain2');		
+		//document.querySelector('#curt1').emit('moveCurtain1');
+		//document.querySelector('#curt2').emit('moveCurtain2');
+		document.querySelector('#curtVert').emit('moveCurtainVert');			
 	});
 	
 	
