@@ -13,7 +13,6 @@
 <!-- set up the scene -->
 <a-scene altspace sync-system='app: theater; author: greeny3ny'>
 	
-<!-- YPOSITION -50 TO GET POSITIONING RIGHT-->	
     <a-assets>
 
 		<a-asset-item id="object" src="https://greeny3ny.github.io/models/objects/theater.obj"></a-asset-item>
@@ -22,18 +21,16 @@
 		<a-asset-item id="chair" src="https://greeny3ny.github.io/models/dae/chair.dae"></a-asset-item>
 		<img id="curTex" src="https://greeny3ny.github.io/theater/assets/curtain.png"></img>
 		<img id="campTex" src="https://greeny3ny.github.io/theater/assets/campfire.png"></img>
+		<img id="newUserRoomTex" src="https://greeny3ny.github.io/theater/assets/newuserroom.png"></img>
   	</a-assets>
 
 	<!-- Theater model (OBJ FILE) -->
 	<!--<a-entity n-mesh-collider="type:environment" position="37 0 -28" rotation="0 0 0" scale="1 1 1" obj-model="obj: #object; mtl: #material"></a-entity>
--->
-	<a-entity light="type: directional; color: #FFF; intensity: 1.0" position="-50 9 0"></a-entity>
 
 	<!-- Theater model -->
 	<a-entity n-mesh-collider="type:environment" position="-50 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
 	
 	<!-- Chairs -->
-	
 	<a-entity n-mesh-collider="type:hologram" position ="-42 0.5 0" rotation="0 180 0" scale="0.5 0.5 0.5" collada-model="#chair"></a-entity>
 	<a-entity n-mesh-collider="type:hologram" position ="-42 0.5 1.5" rotation="0 180 0" scale="0.5 0.5 0.5" collada-model="#chair"></a-entity>
 	<a-entity n-mesh-collider="type:hologram" position ="-42 0.5 -1.5" rotation="0 180 0" scale="0.5 0.5 0.5" collada-model="#chair"></a-entity>
@@ -53,7 +50,10 @@
 	
 	<a-entity n-mesh-collider="type:hologram" position ="-44 0.5 10.5" rotation="0 140 0" scale="0.5 0.5 0.5" collada-model="#chair"></a-entity>
 	<a-entity n-mesh-collider="type:hologram" position ="-44 0.5 -10.5" rotation="0 220 0" scale="0.5 0.5 0.5" collada-model="#chair"></a-entity>
-		
+	
+	<!-- Curtain control text-->
+	<a-entity position='15 9 0' rotation='0 0 0' n-text='text: Curtain control;'></a-entity>
+	
 	<!-- Horizontal Curtain -->
 	<!--
 	<a-entity id="curt1" geometry="primitive:box" material="shader: flat; src: #curTex" position="-8.5 10 9.5" scale="0.1 18 19" sync="ownOn:moveCurtain1" sync-transform>
@@ -82,7 +82,12 @@
 	
 	<!-- Campfire background -->
 	<a-entity id="campfireRaise" geometry="primitive:box" material="shader: flat; src: #campTex" position="-63 10 0" scale="0.1 20 38" sync="ownOn:campfireRaise" sync-transform>
-		<a-animation begin="campfireRaise" dur="5000" direction="alternate" easing="linear" attribute="position" from="-63 10 0" to="-63 -9 0"  ></a-animation>
+		<a-animation begin="campfireRaise" dur="5000" direction="alternate" easing="linear" attribute="position" from="-63 10 0" to="-63 -10 0"  ></a-animation>
+	</a-entity>
+	
+	<!-- New User Room background -->
+	<a-entity id="newUserRaise" geometry="primitive:box" material="shader: flat; src: #newUserRoomTex" position="-63.1 9.5 0" scale="0.1 20 38" sync="ownOn:newUserRaise" sync-transform>
+		<a-animation begin="newUserRaise" dur="5000" direction="alternate" easing="linear" attribute="position" from="-63.1 10 0" to="-63.1 -10 0"  ></a-animation>
 	</a-entity>
 	
 </a-scene>
@@ -97,13 +102,16 @@
 	var openMat = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 	var closeMat = new THREE.MeshBasicMaterial( { color: 0x0000ff } );
 	var redMat = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+	var NUR_Mat = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 	var openBox = new THREE.Mesh(boxGeo, openMat);
 	var lowerBox = new THREE.Mesh(boxGeo, closeMat);
 	var campfireRaiseBox = new THREE.Mesh(boxGeo, redMat);
+	var NUR_RaiseBox = new THREE.Mesh(boxGeo, NUR_Mat);
 
 	openBox.position.set(-36, 9, 0);
 	lowerBox.position.set(-36, 9, 1);
 	campfireRaiseBox.position.set(-36, 9, 2);
+	NUR_RaiseBox.position.set(-36, 9, 3);
 	//lowerBox.position.set(-11, 20, 0);
 
 	
@@ -121,10 +129,14 @@
 		document.querySelector('#campfireRaise').emit('campfireRaise');
 	});
 	
+	NUR_RaiseBox.addEventListener('cursordown', function(){
+		document.querySelector('#newUserRaise').emit('newUserRaise');
+	});
 	
 	sim.scene.add(openBox);
 	sim.scene.add(lowerBox);
 	sim.scene.add(campfireRaiseBox);
+	sim.scene.add(NUR_RaiseBox);
 	
 	
 	//Draw chairs
