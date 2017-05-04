@@ -11,7 +11,7 @@
 <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
 
 <!-- set up the scene -->
-<a-scene altspace='fullspace:true' sync-system='app: theater; author: greeny3ny'>
+<a-scene altspace sync-system='app: theater; author: greeny3ny'>
 	
     <a-assets>
 
@@ -19,9 +19,9 @@
 		<a-asset-item id="material" src="https://greeny3ny.github.io/models/materials/theater.mtl"></a-asset-item>
 		<a-asset-item id="theater" src="https://greeny3ny.github.io/models/dae/theater.dae"></a-asset-item>
 		<a-asset-item id="chair" src="https://greeny3ny.github.io/models/dae/chair.dae"></a-asset-item>
-		<img id="curTex" src="https://greeny3ny.github.io/theater/assets/curtain.png">
-		<img id="campTex" src="https://greeny3ny.github.io/theater/assets/campfire.png">
-		<img id="newUserRoomTex" src="https://greeny3ny.github.io/theater/assets/newuserroom.png">
+		<img id="curTex" src="https://greeny3ny.github.io/theater/assets/curtain.png"></img>
+		<img id="campTex" src="https://greeny3ny.github.io/theater/assets/campfire.png"></img>
+		<img id="newUserRoomTex" src="https://greeny3ny.github.io/theater/assets/newuserroom.png"></img>
   	</a-assets>
 
 	<!-- Theater model (OBJ FILE) -->
@@ -29,10 +29,6 @@
 
 	<!-- Theater model -->
 	<a-entity n-mesh-collider="type:environment" position="-50 0 0" rotation="0 0 0" scale="1 1 1" collada-model="#theater"></a-entity>
-	
-	<a-entity position="0 1 0" rotation="0 0 0" scale="2 2 2" n-layout-browser="url:  https://video-jukebox.firebaseapp.com/"></a-entity>`
-	
-	<a-entity position="0 0 0" scale="1 1 1" n-layout-browser="url: https://www.google.co.uk/"></a-entity>
 	
 	<!-- Chairs -->
 	<a-entity n-mesh-collider="type:hologram" position ="-42 0.5 0" rotation="0 180 0" scale="0.5 0.5 0.5" collada-model="#chair"></a-entity>
@@ -142,8 +138,7 @@
 	sim.scene.add(campfireRaiseBox);
 	sim.scene.add(NUR_RaiseBox);
 	
-	altspace.getDocument().position.set(0,0,0);
-	sim.scene.add(altspace.getDocument());
+	
 	//Draw chairs
 	//for (var i=0; i<10; i++){
 	
